@@ -1,0 +1,10 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="256" fill="#0052FF"/>
+  
+  <!-- Wallet Shape -->
+  <path d="M384 176H128c-17.7 0-32 14.3-32 32v160c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32v-160c0-17.7-14.3-32-32-32z" fill="white"/>
+  
+  <!-- Code/API Symbol -->
+  <path d="M230 208l-48 48 48 48M282 208l48 48-48 48" stroke="#0052FF" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
