@@ -23,6 +23,7 @@ function ApiKeyComponent({ position }: ApiKeyComponentProps) {
     keySecret: '',
   });
   const [error, setError] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(!isConfigured);
 
   const handleSave = () => {
     setError(null);
@@ -37,18 +38,35 @@ function ApiKeyComponent({ position }: ApiKeyComponentProps) {
       return;
     }
 
-    if (!credentials.keySecret.includes('BEGIN EC PRIVATE KEY')) {
+    const formattedKey = credentials.keySecret.trim();
+    if (!formattedKey.includes('-----BEGIN EC PRIVATE KEY-----') || 
+        !formattedKey.includes('-----END EC PRIVATE KEY-----')) {
       setError('Invalid Private Key format. Expected EC PRIVATE KEY format');
       return;
     }
 
     try {
       setCredentials(credentials.keyName, credentials.keySecret);
+      setIsExpanded(false);
     } catch (err: any) {
       setError(err.message || 'Failed to set credentials');
       console.error('Credential setup error:', err);
     }
   };
+
+  if (isConfigured && !isExpanded) {
+    return (
+      <Draggable defaultPosition={position} grid={[25, 25]}>
+        <div className="component api-key-minimized" onClick={() => setIsExpanded(true)}>
+          <div className="component-header">
+            <span>🔑</span>
+            <span>{credentials.keyName.split('/').pop()}</span>
+            <span className="auth-check">✓</span>
+          </div>
+        </div>
+      </Draggable>
+    );
+  }
 
   return (
     <Draggable defaultPosition={position} grid={[25, 25]}>
@@ -85,6 +103,7 @@ function ApiKeyComponent({ position }: ApiKeyComponentProps) {
               })}
               disabled={isConfigured}
               rows={4}
+              className="private-key-input"
             />
           </div>
 
@@ -102,12 +121,12 @@ function ApiKeyComponent({ position }: ApiKeyComponentProps) {
           </button>
 
           {isConfigured && (
-            <div className="component-success">
-              <div>CDP credentials configured successfully!</div>
-              <div className="credentials-info">
-                Key Name: {credentials.keyName.split('/').pop()}
-              </div>
-            </div>
+            <button 
+              onClick={() => setIsExpanded(false)} 
+              className="minimize-button"
+            >
+              Minimize
+            </button>
           )}
         </div>
       </div>

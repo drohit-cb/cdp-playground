@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 import { useCdp } from '../contexts/CdpContext';
+import { CreateWalletRequest, Wallet } from '../types/wallet';
 
 interface Position {
   x: number;
@@ -9,15 +10,6 @@ interface Position {
 
 interface WalletComponentProps {
   position: Position;
-}
-
-interface Wallet {
-  id: string;
-  network_id: string;
-  status: string;
-  addresses: string[];
-  created_at: string;
-  updated_at: string;
 }
 
 function WalletComponent({ position }: WalletComponentProps) {
@@ -38,7 +30,13 @@ function WalletComponent({ position }: WalletComponentProps) {
     setError(null);
 
     try {
-      const newWallet = await cdpService.createWallet(networkId, useServerSigner);
+      const request: CreateWalletRequest = {
+        wallet: {
+          network_id: networkId,
+          use_server_signer: useServerSigner
+        }
+      };
+      const newWallet = await cdpService.createWallet(request);
       setWallet(newWallet);
     } catch (err: any) {
       setError(err.message || 'Failed to create wallet');
@@ -97,7 +95,6 @@ function WalletComponent({ position }: WalletComponentProps) {
               <div className="wallet-details">
                 <div>ID: {wallet.id}</div>
                 <div>Network: {wallet.network_id}</div>
-                <div>Status: {wallet.status}</div>
                 <div>Created: {new Date(wallet.created_at).toLocaleString()}</div>
               </div>
             </div>

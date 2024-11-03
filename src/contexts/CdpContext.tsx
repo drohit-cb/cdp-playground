@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { CdpApiService } from '../services/cdp';
+import { AxiosHttpClient } from '../services/http/HttpClient';
 
 interface CdpContextType {
   cdpService: CdpApiService | null;
@@ -19,7 +20,8 @@ export const CdpProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [cdpService, setCdpService] = useState<CdpApiService | null>(null);
 
   const setCredentials = (keyName: string, keySecret: string) => {
-    const service = new CdpApiService(keyName, keySecret);
+    const service = new CdpApiService(new AxiosHttpClient(), keyName, keySecret);
+  
     setCdpService(service);
   };
 
@@ -33,3 +35,5 @@ export const CdpProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     </CdpContext.Provider>
   );
 };
+
+export default CdpContext;

@@ -214,6 +214,38 @@ textarea {
   animation: loading-spinner 1s ease infinite;
 }
 
+.private-key-input {
+  -webkit-text-security: disc;
+  font-family: monospace;
+}
+
+.api-key-minimized {
+  width: auto;
+  min-width: 150px;
+  min-height: auto;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.api-key-minimized:hover {
+  transform: translateY(-2px);
+}
+
+.auth-check {
+  color: #28a745;
+  margin-left: 8px;
+}
+
+.minimize-button {
+  background: #666;
+  margin-top: 8px;
+}
+
+.minimize-button:hover {
+  background: #555;
+}
+
 @keyframes loading-spinner {
   from {
     transform: rotate(0turn);
