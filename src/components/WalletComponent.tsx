@@ -55,18 +55,18 @@ function WalletComponent({ position }: WalletComponentProps) {
         </div>
         <div className="component-body">
           <select
-            value={networkId}
-            onChange={(e) => setNetworkId(e.target.value)}
-            disabled={loading}
+              value={networkId}
+              onChange={(e) => setNetworkId(e.target.value)}
+              disabled={loading}
           >
             <option value="base-sepolia">Base Sepolia</option>
             <option value="base-mainnet">Base Mainnet</option>
-            <option value="ethereum-sepolia">Ethereum Sepolia</option>
-            <option value="ethereum-goerli">Ethereum Goerli</option>
+            <option value="ethereum-holesky">Ethereum Holesky</option>
+            <option value="ethereum-mainnet">Ethereum Mainnet</option>
           </select>
 
           <label className="checkbox-label">
-            <input
+          <input
               type="checkbox"
               checked={useServerSigner}
               onChange={(e) => setUseServerSigner(e.target.checked)}

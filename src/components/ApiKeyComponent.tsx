@@ -39,9 +39,9 @@ function ApiKeyComponent({ position }: ApiKeyComponentProps) {
     }
 
     const formattedKey = credentials.keySecret.trim();
-    if (!formattedKey.includes('-----BEGIN EC PRIVATE KEY-----') || 
-        !formattedKey.includes('-----END EC PRIVATE KEY-----')) {
-      setError('Invalid Private Key format. Expected EC PRIVATE KEY format');
+    if (!formattedKey.includes('-----BEGIN PRIVATE KEY-----') || 
+        !formattedKey.includes('-----END PRIVATE KEY-----')) {
+      setError('Invalid Private Key format. Expected PRIVATE KEY format');
       return;
     }
 
@@ -95,7 +95,7 @@ function ApiKeyComponent({ position }: ApiKeyComponentProps) {
             <label htmlFor="keySecret">Private Key</label>
             <textarea
               id="keySecret"
-              placeholder="-----BEGIN EC PRIVATE KEY-----"
+              placeholder="-----BEGIN PRIVATE KEY-----"
               value={credentials.keySecret}
               onChange={(e) => setCredentialsState({
                 ...credentials,

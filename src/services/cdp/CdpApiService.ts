@@ -17,19 +17,6 @@ export class CdpApiService {
     this.keySecret = privateKey;
   }
 
-  private sec1ToPkcs8(pem: string): string {
-    const base64 = pem
-      .replace(/-----BEGIN EC PRIVATE KEY-----/, '')
-      .replace(/-----END EC PRIVATE KEY-----/, '')
-      .replace(/[\r\n]/g, '')
-      .replace(/\s+/g, '');
- 
-    const binaryString = atob(base64);
-    
-    console.log('Binary String:', binaryString);
-    return binaryString;
-  }
-
 
   private generateNonce(): string {
     // Use Web Crypto API for random values
@@ -50,15 +37,7 @@ export class CdpApiService {
         uri,
     };
 
-
-
-    console.log('Signing JWT:', payload);
-    let pkcs8KeyString = this.sec1ToPkcs8(this.keySecret);
-    console.log('Private Key String:', pkcs8KeyString);
-    const privateKey = await jose.importPKCS8(pkcs8KeyString, 'ES256');
-  
-    console.log('Private Key:', privateKey);
-
+    const privateKey = await jose.importPKCS8(this.keySecret, 'ES256');
     return await new jose.SignJWT(payload)
       .setProtectedHeader({
           alg: 'ES256',
@@ -78,18 +57,13 @@ export class CdpApiService {
     config?: Record<string, any>
   ): Promise<T> {
     try {
-      console.log('Making request:', method, endpoint, data);
-
       const jwt = await this.generateJWT(method, endpoint);
-
-      console.log('JWT:', jwt);
-
       const headers = {
         Authorization: `Bearer ${jwt}`,
         'Content-Type': 'application/json',
       };
 
-      const url = `${this.baseURL}${endpoint}`;
+      const url = `${endpoint}`;
       
       switch (method.toUpperCase()) {
         case 'GET':
