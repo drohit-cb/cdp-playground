@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+# CDP Playground
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A Next.js application for interacting with Coinbase's CDP API.
 
-## Available Scripts
+## Directory Structure
 
-In the project directory, you can run:
 
-### `npm start`
+src/
+├── app/
+│ ├── api/ # Backend API routes
+│ │ ├── lib/ # Backend utilities
+│ │ │ └── jwt.ts # JWT generation
+│ │ ├── config.ts # Backend configuration
+│ │ └── wallets/ # Wallet endpoints
+│ │ └── route.ts
+│ │
+│ ├── components/ # Frontend React components
+│ │ ├── Canvas.tsx
+│ │ ├── Toolbar.tsx
+│ │ └── WalletComponent.tsx
+│ │
+│ ├── services/ # Frontend services
+│ │ └── cdp/
+│ │ └── CdpApiService.ts
+│ │
+│ ├── types/ # Shared TypeScript types
+│ │ └── wallet.ts
+│ │
+│ ├── globals.css # Global styles
+│ ├── layout.tsx # Root layout
+│ └── page.tsx # Main page
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Setup
 
-### `npm test`
+1. Clone the repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone <repository-url>
+cd cdp-playground
+```
 
-### `npm run build`
+2. Install dependencies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Create environment variables
 
-### `npm run eject`
+```bash
+CDP_KEY_NAME=your_key_name
+CDP_KEY_SECRET=your_key_secret
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Start development server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+yarn dev
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Testing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Backend Testing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Using cURL:
 
-### Code Splitting
+```bash
+curl -X POST -H "Content-Type: application/json" http://localhost:3000/api/wallets -d \
+'{
+  "wallet": {
+    "network_id": "base-sepolia",
+    "use_server_signer": false
+  }
+}'
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Frontend Testing
 
-### Analyzing the Bundle Size
+1. Open http://localhost:3000 in your browser
+2. Use the UI to:
+   - Drag wallet component onto canvas
+   - Configure wallet settings
+   - Create new wallet
+   - View response
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Key Features
 
-### Making a Progressive Web App
+- **Backend**:
+  - JWT generation for CDP API
+  - Wallet creation endpoint
+  - Error handling
+  - Environment configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **Frontend**:
+  - Draggable components
+  - Canvas layout
+  - Wallet creation form
+  - Real-time feedback
 
-### Advanced Configuration
+## Development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- `yarn dev`: Start development server
+- `yarn build`: Build for production
+- `yarn start`: Start production server
+- `yarn lint`: Run linter
+- `yarn lint:fix`: Fix linting issues
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Create feature branch
+2. Make changes
+3. Run tests
+4. Submit pull request
